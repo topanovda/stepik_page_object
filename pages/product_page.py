@@ -16,15 +16,15 @@ class ProductPage(BasePage):
     def should_be_newYear_url(self):
         current_url = self.driver.current_url
         assert (
-            "?promo=newYear" in current_url
-        ), f"Expected 'promo=newYear' in URL, but got: {current_url}"
+            "?promo=offer1" in current_url
+        ), f"Expected '?promo=offer1' in URL, but got: {current_url}"
 
     def add_to_basket(self):
         add_basket = self.driver.find_element(
             *ProductPageLocators.ADD_BASKET_BUTTON
         ).click()
 
-    def product_name_matches_the_one_added(self):
+    def product_name_matches_the_one_added(self, product_name):
         # Проверяем наличие элемента с сообщением, что товар добавлен к корзину
         assert self.is_element_present(
             *ProductPageLocators.ITEM_ADDED_TO_CART
@@ -38,7 +38,9 @@ class ProductPage(BasePage):
         # Проверяем, что название товара в сообщении совпадает с товаром, который мы добавили
         assert product_name == message, "There is no such product in the message"
 
-    def the_price_of_the_cart_is_the_same_as_the_price_of_the_product(self):
+    def the_price_of_the_cart_is_the_same_as_the_price_of_the_product(
+        self, basket_value
+    ):
         # Проверяем наличие элемента с сообщением о стоимости товара
         assert self.is_element_present(
             *ProductPageLocators.BASKET_VALUE
