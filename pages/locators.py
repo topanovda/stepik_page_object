@@ -18,6 +18,7 @@ class ProductPageLocators:
         "css selector",
         ".alert-safe:nth-of-type(1) .alertinner strong",
     )
-    PRODUCT_NAME = ("css selector", "div.product_main h1")
+    PRODUCT_NAME = ("xpath", "//div[@class='col-sm-6 product_main']//h1[1]")
     BASKET_VALUE = ("css selector", ".alert-info .alertinner strong")
-    COST_OF_GOOD = ("css selector", "p.price_color")
+    COST_OF_GOOD = ("xpath", "(//p[@class='price_color'])[1]")
+    SUCCESS_MESSAGE = ("xpath", "(//*[@id='messages']/div[1]/div/text())[2]")
