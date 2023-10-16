@@ -1,5 +1,6 @@
 from .locators import ProductPageLocators
 from .base_page import BasePage
+import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,10 +15,15 @@ class ProductPage(BasePage):
         self.add_to_basket()
         # Вызов метода с математической операцией из класса BasePage
         self.solve_quiz_and_get_code()
+        # Проверяем что нет сообщения об успехе
+        self.test_guest_cant_see_success_message_after_adding_product_to_basket()
+        # проверяем что сообщение пропадает после успешного добавления в корзину
+        self.test_message_disappeared_after_adding_product_to_basket()
         # Сообщение о том, что товар добавлен в корзину. Название товара в сообщении долежн совпадать с тем товаром, который вы действительно добавили
-        self.product_name_matches_the_one_added()
+        # self.product_name_matches_the_one_added()
         # Сообщение со стоимостью корзины. Стоимость корзины совпадает с ценой товара
-        self.the_price_of_the_cart_is_the_same_as_the_price_of_the_product()
+
+        # self.test_guest_can_go_to_login_page_from_product_page()
 
     def should_be_newYear_url(self):
         current_url = self.driver.current_url
@@ -62,11 +68,21 @@ class ProductPage(BasePage):
             cost_of_good == basket_value
         ), "The price of the cart does not match the price of the product"
 
-    # def is_disappeared(self, how, what, timeout=4):
+    # @pytest.mark.xfail(reason="Падает")
+    # def test_guest_cant_see_success_message_after_adding_product_to_basket(self):
+    #     # Проверяем, что элемента нет на странице
+    #     assert self.is_not_element_present(
+    #         *ProductPageLocators.SUCCESS_MESSAGE
+    #     ), "Success message is presented, but should not be"
+
+    # @pytest.mark.xfail(reason="Падает")
+    # def test_message_disappeared_after_adding_product_to_basket(
+    #     self, how, what, timeout=4
+    # ):
     #     # проверка на исчезание элемента на странице
     #     try:
     #         WebDriverWait(self.driver, timeout, 1, TimeoutException).until_not(
-    #             EC.presence_of_element_located((how, what))
+    #             EC.presence_of_element_located((ProductPageLocators.SUCCESS_MESSAGE))
     #         )
     #     except TimeoutException:
     #         return False

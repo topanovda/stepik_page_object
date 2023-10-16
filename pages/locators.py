@@ -2,6 +2,11 @@ class MainPageLocators:
     LOGIN_LINK = ("css selector", "#login_link")
 
 
+class BasePageLocators:
+    LOGIN_LINK = ("css selector", "#login_link")
+    LOGIN_LINK_INVALID = ("css selector", "#login_link_inc")
+
+
 class LoginPageLocators:
     LOGIN_EMAIL = ("css selector", "#id_login-username")
     LOGIN_PASSWORD = ("css selector", "#id_login-password")
