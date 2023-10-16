@@ -29,6 +29,7 @@ def test_guest_can_add_product_to_basket(driver, link):
     page = ProductPage(driver, link)
     page.open()
     page.should_be_newYear_url()
+    page.should_not_be_success_message()
     page.add_to_basket()
     page.solve_quiz_and_get_code()
     page.product_name_matches_the_one_added()

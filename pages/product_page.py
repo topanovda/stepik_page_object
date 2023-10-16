@@ -1,12 +1,17 @@
 from .locators import ProductPageLocators
 from .base_page import BasePage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ProductPage(BasePage):
     def add_to_basket(self):
         self.should_be_newYear_url()
+        # Проверка, что нет сообщения что товар в корзине
         self.should_not_be_success_message()
-        self.add_to_basket
+        # Добавление товара в корзину
+        self.add_to_basket()
         # Вызов метода с математической операцией из класса BasePage
         self.solve_quiz_and_get_code()
         # Сообщение о том, что товар добавлен в корзину. Название товара в сообщении долежн совпадать с тем товаром, который вы действительно добавили
@@ -21,6 +26,7 @@ class ProductPage(BasePage):
         ), f"Expected '?promo=offer1' in URL, but got: {current_url}"
 
     def should_not_be_success_message(self):
+        # Проверяем, что элемент не появляется на странице в течение заданного времени
         assert self.is_not_element_present(
             *ProductPageLocators.SUCCESS_MESSAGE
         ), "Success message is presented, but should not be"
@@ -55,6 +61,17 @@ class ProductPage(BasePage):
         assert (
             cost_of_good == basket_value
         ), "The price of the cart does not match the price of the product"
+
+    # def is_disappeared(self, how, what, timeout=4):
+    #     # проверка на исчезание элемента на странице
+    #     try:
+    #         WebDriverWait(self.driver, timeout, 1, TimeoutException).until_not(
+    #             EC.presence_of_element_located((how, what))
+    #         )
+    #     except TimeoutException:
+    #         return False
+
+    #     return True
 
     # def should_be_book_name(self):
     #     assert self.is_element_present(
