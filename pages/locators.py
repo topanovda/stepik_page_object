@@ -27,3 +27,9 @@ class ProductPageLocators:
     BASKET_VALUE = ("css selector", ".alert-info .alertinner strong")
     COST_OF_GOOD = ("xpath", "(//p[@class='price_color'])[1]")
     SUCCESS_MESSAGE = ("xpath", "(//*[@id='messages']/div[1]/div/text())[2]")
+
+
+class BasketPageLocators:
+    BASKET_LINK = ("xpath", "//a[@class='btn btn-default']")
+    BASKET_IS_EMPTY = ("xpath", "(//a[normalize-space()='Continue shopping'])[1]")
+    BASKET_IS_FULL = ("xpath", "//form[@id='basket_formset']")

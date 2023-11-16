@@ -1,5 +1,6 @@
 import time
 from .locators import BasePageLocators
+from .locators import BasketPageLocators
 import math
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -71,3 +72,7 @@ class BasePage:
             return False
 
         return True
+
+    def go_to_basket(self):
+        link = self.driver.find_element(*BasketPageLocators.BASKET_LINK)
+        link.click()

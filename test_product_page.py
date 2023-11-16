@@ -1,5 +1,6 @@
 from .pages.product_page import ProductPage
 from .pages.base_page import BasePage
+from .pages.basket_page import BasketPage
 import pytest
 import time
 
@@ -51,3 +52,21 @@ def test_guest_can_go_to_login_page_from_product_page(driver):
     page = ProductPage(driver, link)
     page.open()
     page.go_to_login_page()
+
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(driver, link):
+    page = ProductPage(driver, link)
+    page.open()
+    page.go_to_basket()  # переходим в корзину
+    basket_page = BasketPage(driver, driver.current_url)  # получаем страницу корзины
+    basket_page.should_be_basket_empty()  # выполняем проверку что корзина пуста
+
+
+def test_guest_can_see_product_in_basket_opened_from_product_page(driver, link):
+    page = ProductPage(driver, link)
+    page.open()
+    page.add_to_basket()
+    page.solve_quiz_and_get_code()
+    page.go_to_basket()  # переходим в корзину
+    basket_page = BasketPage(driver, driver.current_url)  # получаем страницу корзины
+    basket_page.should_be_basket_full()  # выполняем проверку что корзина пуста
